@@ -9,17 +9,22 @@ namespace UsernameScannerThingy
     class User
     {
         private string username;
-        private string userChatMsg;
+        private List<string> msgs;
 
-        public string UserChatMessage
+        public List<string> UserChatMessages
         {
-            get { return userChatMsg; }
+            get { return msgs; }
         }
 
-        public User(string username, string userChatMsg)
+        public User(string username)
         {
             this.username = username;
-            this.userChatMsg = userChatMsg;
+            msgs = new List<string>();
+        }
+
+        public void AddMessage(string message)
+        {
+            msgs.Add(message);
         }
 
         public override string ToString()

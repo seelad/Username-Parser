@@ -15,11 +15,14 @@ namespace UsernameScannerThingy
 {
     public partial class UserNameFinder : Form
     {
+        private UserLookUp lookUpForm;
 
         public UserNameFinder()
         {
             InitializeComponent();
-            this.Text = "Username Parser v0.00"; 
+
+            this.Text = "Username Parser v0.23";
+
         }
 
         private string CheckDialog()
@@ -79,32 +82,69 @@ namespace UsernameScannerThingy
 
                 indexStart += 1; //Adds one to account for the space after the time stamp.
                 string username = string.Empty;
-                string playerMsg = string.Empty;
+                //string playerMsg = string.Empty;
                 if (indexStart != 0 && indexEnd != -1)
                 {
                     username = line.Substring(indexStart, (indexEnd - indexStart));
-                    playerMsg = line.Substring(indexEnd);
+                    //playerMsg = line.Substring(indexEnd);
 
                 }
-                User newUser = new User(username, playerMsg);
+                User newUser = new User(username);
+                newUser.AddMessage(line);
                 bool passed = true; //I dislike this.
-                foreach (User u in tempUsers)
+                if (newUser.ToString() != "")
                 {
-                    if (u.ToString() == newUser.ToString() || newUser.ToString() == "")
+                    foreach (User u in tempUsers)
                     {
-                        passed = false;
-                        break;
+                        if (u.ToString() == newUser.ToString())
+                        {
+                            u.AddMessage(newUser.UserChatMessages[0]);
+                            passed = false;
+                            break;
+                        }
                     }
-                }
-                if (passed)
-                {
-                    tempUsers.Add(newUser); //Add it to tempusers so I don't have to parse the listBox one from type object.
-                    listBox_Users.Items.Add(newUser);
+                    if (passed)
+                    {
+                        tempUsers.Add(newUser); //Add it to tempusers so I don't have to parse the listBox one from type object.
+                        listBox_Users.Items.Add(newUser);
+                    }
                 }
             }
 
             label_Users.Text = "Users (" + listBox_Users.Items.Count + ")";
 
+        }
+
+        private void listBox_Users_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                listBox_Users.SelectedIndices.Clear();
+                listBox_Users.SelectedIndex = listBox_Users.IndexFromPoint(e.Location);
+                if (listBox_Users.SelectedIndex != -1)
+                {
+                    contextMenu_UserList.Show(Cursor.Position);
+                }
+            }
+        }
+
+        private void but_Info_Click(object sender, EventArgs e)
+        {
+            User u = (User)listBox_Users.SelectedItem;
+            lookUpForm = new UserLookUp(u.UserChatMessages, u.ToString()); //Creates the lookUpForm.
+            lookUpForm.StartPosition = FormStartPosition.CenterParent; //Centers the lookUpForm to the parent.
+            lookUpForm.ShowDialog(this); //Shows the form.
+        }
+
+        private void listBox_Users_DoubleClick(object sender, EventArgs e)
+        {
+            if (listBox_Users.SelectedIndex != -1)
+            {
+                User u = (User)listBox_Users.SelectedItem;
+                lookUpForm = new UserLookUp(u.UserChatMessages, u.ToString()); //Creates the lookUpForm.
+                lookUpForm.StartPosition = FormStartPosition.CenterParent; //Centers the lookUpForm to the parent.
+                lookUpForm.ShowDialog(this); //Shows the form.
+            }
         }
 
 

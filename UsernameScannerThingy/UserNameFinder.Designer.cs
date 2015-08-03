@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserNameFinder));
             this.toolStrip_01 = new System.Windows.Forms.ToolStrip();
             this.toolBut_File = new System.Windows.Forms.ToolStripDropDownButton();
@@ -38,7 +39,10 @@
             this.label_Users = new System.Windows.Forms.Label();
             this.label_RawText = new System.Windows.Forms.Label();
             this.button_GetUsers = new System.Windows.Forms.Button();
+            this.contextMenu_UserList = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.but_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip_01.SuspendLayout();
+            this.contextMenu_UserList.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip_01
@@ -65,7 +69,7 @@
             // toolBut_Load
             // 
             this.toolBut_Load.Name = "toolBut_Load";
-            this.toolBut_Load.Size = new System.Drawing.Size(152, 22);
+            this.toolBut_Load.Size = new System.Drawing.Size(100, 22);
             this.toolBut_Load.Text = "Load";
             this.toolBut_Load.Click += new System.EventHandler(this.toolBut_Load_Click);
             // 
@@ -73,11 +77,14 @@
             // 
             this.listBox_Users.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox_Users.FormattingEnabled = true;
+            this.listBox_Users.HorizontalScrollbar = true;
             this.listBox_Users.ItemHeight = 20;
             this.listBox_Users.Location = new System.Drawing.Point(249, 41);
             this.listBox_Users.Name = "listBox_Users";
             this.listBox_Users.Size = new System.Drawing.Size(212, 284);
             this.listBox_Users.TabIndex = 1;
+            this.listBox_Users.DoubleClick += new System.EventHandler(this.listBox_Users_DoubleClick);
+            this.listBox_Users.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_Users_MouseDown);
             // 
             // OpenFileDialog
             // 
@@ -89,13 +96,13 @@
             this.textBox_Raw.Multiline = true;
             this.textBox_Raw.Name = "textBox_Raw";
             this.textBox_Raw.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox_Raw.Size = new System.Drawing.Size(231, 218);
+            this.textBox_Raw.Size = new System.Drawing.Size(231, 240);
             this.textBox_Raw.TabIndex = 2;
             // 
             // label_Users
             // 
             this.label_Users.AutoSize = true;
-            this.label_Users.Location = new System.Drawing.Point(346, 25);
+            this.label_Users.Location = new System.Drawing.Point(337, 25);
             this.label_Users.Name = "label_Users";
             this.label_Users.Size = new System.Drawing.Size(34, 13);
             this.label_Users.TabIndex = 3;
@@ -112,13 +119,27 @@
             // 
             // button_GetUsers
             // 
-            this.button_GetUsers.Location = new System.Drawing.Point(81, 265);
+            this.button_GetUsers.Location = new System.Drawing.Point(78, 287);
             this.button_GetUsers.Name = "button_GetUsers";
             this.button_GetUsers.Size = new System.Drawing.Size(95, 38);
             this.button_GetUsers.TabIndex = 5;
             this.button_GetUsers.Text = "Get Users!";
             this.button_GetUsers.UseVisualStyleBackColor = true;
             this.button_GetUsers.Click += new System.EventHandler(this.button_GetUsers_Click);
+            // 
+            // contextMenu_UserList
+            // 
+            this.contextMenu_UserList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.but_Info});
+            this.contextMenu_UserList.Name = "contextMenu_UserList";
+            this.contextMenu_UserList.Size = new System.Drawing.Size(96, 26);
+            // 
+            // but_Info
+            // 
+            this.but_Info.Name = "but_Info";
+            this.but_Info.Size = new System.Drawing.Size(152, 22);
+            this.but_Info.Text = "Info";
+            this.but_Info.Click += new System.EventHandler(this.but_Info_Click);
             // 
             // UserNameFinder
             // 
@@ -131,10 +152,13 @@
             this.Controls.Add(this.textBox_Raw);
             this.Controls.Add(this.listBox_Users);
             this.Controls.Add(this.toolStrip_01);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "UserNameFinder";
             this.Text = "UserName Thingy";
             this.toolStrip_01.ResumeLayout(false);
             this.toolStrip_01.PerformLayout();
+            this.contextMenu_UserList.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,6 +175,8 @@
         private System.Windows.Forms.Label label_Users;
         private System.Windows.Forms.Label label_RawText;
         private System.Windows.Forms.Button button_GetUsers;
+        private System.Windows.Forms.ContextMenuStrip contextMenu_UserList;
+        private System.Windows.Forms.ToolStripMenuItem but_Info;
     }
 }
 
