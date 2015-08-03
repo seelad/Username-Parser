@@ -17,11 +17,17 @@ namespace UsernameScannerThingy
     {
         private UserLookUp lookUpForm;
 
+        private const string extensionName = "Text";
+        private const string extension = ".txt";
+
+
         public UserNameFinder()
         {
             InitializeComponent();
 
-            this.Text = "Username Parser v0.23";
+            this.Text = "Username Parser v0.27";
+            OpenFileDialog.Filter = extensionName + " files (*" + extension + ")|*" + extension;
+            saveFileDialog_Export.Filter = extensionName + " files (*" + extension + ")|*" + extension;
 
         }
 
@@ -36,11 +42,23 @@ namespace UsernameScannerThingy
                 return null;
         }
 
+        /// <summary>
+        /// Opens and checks the save dialog for the user's input.
+        /// </summary>
+        /// <returns>Returns null if the player cancels, otherwise a string of ""</returns>
+        private string CheckDialog_Save()
+        {
+            DialogResult result = saveFileDialog_Export.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                return "";
+            }
+            else
+                return null;
+        }
+
         private void toolBut_Load_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Opening a file will erase any unsaved data, continue?", "Warning", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
                 string tempResult = CheckDialog();
                 if (tempResult != null)
                 {
@@ -59,8 +77,7 @@ namespace UsernameScannerThingy
                     PopulateListBox(lineList.ToArray());
                      
                 }
-                    
-            }
+               
         }
 
         private void button_GetUsers_Click(object sender, EventArgs e)
@@ -79,15 +96,12 @@ namespace UsernameScannerThingy
                 int indexStart = line.IndexOf(']');
                 int indexEnd = line.IndexOf(':');
                 indexEnd = line.IndexOf(':', indexEnd + 1);
+                indexStart += 2; //Adds one to account for the bracket, and another for the space after the time stamp.
 
-                indexStart += 1; //Adds one to account for the space after the time stamp.
                 string username = string.Empty;
-                //string playerMsg = string.Empty;
                 if (indexStart != 0 && indexEnd != -1)
                 {
                     username = line.Substring(indexStart, (indexEnd - indexStart));
-                    //playerMsg = line.Substring(indexEnd);
-
                 }
                 User newUser = new User(username);
                 newUser.AddMessage(line);
@@ -144,6 +158,47 @@ namespace UsernameScannerThingy
                 lookUpForm = new UserLookUp(u.UserChatMessages, u.ToString()); //Creates the lookUpForm.
                 lookUpForm.StartPosition = FormStartPosition.CenterParent; //Centers the lookUpForm to the parent.
                 lookUpForm.ShowDialog(this); //Shows the form.
+            }
+        }
+
+        private void but_Remove_Click(object sender, EventArgs e)
+        {
+            if (listBox_Users.SelectedIndex != -1)
+            {
+                listBox_Users.Items.RemoveAt(listBox_Users.SelectedIndex);
+                label_Users.Text = "Users (" + listBox_Users.Items.Count + ")";
+            }
+        }
+
+        private void but_ExportUserList_Click(object sender, EventArgs e)
+        {
+            string tempResult = CheckDialog_Save();
+            if (tempResult != null)
+            {
+                using (StreamWriter stream = new StreamWriter(@saveFileDialog_Export.FileName))
+                {
+                    for (int i = 0; i < listBox_Users.Items.Count; i++)
+                    {
+                        stream.WriteLine(listBox_Users.Items[i].ToString()); //Writes the ToString of the user.
+                    }
+                }
+
+            }
+        }
+
+        private void but_ExportRawText_Click(object sender, EventArgs e)
+        {
+            string tempResult = CheckDialog_Save();
+            if (tempResult != null)
+            {
+                using (StreamWriter stream = new StreamWriter(@saveFileDialog_Export.FileName))
+                {
+                    for (int i = 0; i < textBox_Raw.Lines.Length; i++)
+                    {
+                        stream.WriteLine(textBox_Raw.Lines[i]); //Writes the specific line of the text box.
+                    }
+                }
+
             }
         }
 
