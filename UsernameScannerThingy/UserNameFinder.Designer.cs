@@ -56,6 +56,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tools_ButCaseSensitive = new System.Windows.Forms.ToolStripMenuItem();
             this.viewMeChatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.but_CopyName = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip_01.SuspendLayout();
             this.contextMenu_UserList.SuspendLayout();
             this.SuspendLayout();
@@ -172,21 +173,22 @@
             // 
             this.contextMenu_UserList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.but_Info,
+            this.but_CopyName,
             this.but_Remove});
             this.contextMenu_UserList.Name = "contextMenu_UserList";
-            this.contextMenu_UserList.Size = new System.Drawing.Size(118, 48);
+            this.contextMenu_UserList.Size = new System.Drawing.Size(138, 70);
             // 
             // but_Info
             // 
             this.but_Info.Name = "but_Info";
-            this.but_Info.Size = new System.Drawing.Size(117, 22);
+            this.but_Info.Size = new System.Drawing.Size(152, 22);
             this.but_Info.Text = "Info";
             this.but_Info.Click += new System.EventHandler(this.but_Info_Click);
             // 
             // but_Remove
             // 
             this.but_Remove.Name = "but_Remove";
-            this.but_Remove.Size = new System.Drawing.Size(117, 22);
+            this.but_Remove.Size = new System.Drawing.Size(152, 22);
             this.but_Remove.Text = "Remove";
             this.but_Remove.Click += new System.EventHandler(this.but_Remove_Click);
             // 
@@ -274,6 +276,8 @@
             this.tools_ButCaseSensitive.Name = "tools_ButCaseSensitive";
             this.tools_ButCaseSensitive.Size = new System.Drawing.Size(161, 22);
             this.tools_ButCaseSensitive.Text = "Case Sensitive";
+            this.tools_ButCaseSensitive.ToolTipText = "Causes the filter/\"Only Show Users Who Chatted\" to only find exact case matching " +
+    "instances.";
             this.tools_ButCaseSensitive.Click += new System.EventHandler(this.tools_ButCaseSensitive_Click);
             // 
             // viewMeChatsToolStripMenuItem
@@ -281,7 +285,16 @@
             this.viewMeChatsToolStripMenuItem.Name = "viewMeChatsToolStripMenuItem";
             this.viewMeChatsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.viewMeChatsToolStripMenuItem.Text = "View /me Chats";
+            this.viewMeChatsToolStripMenuItem.ToolTipText = "Opens up another window which displays any unknown /me chats that did not have a " +
+    "corresponding known user.";
             this.viewMeChatsToolStripMenuItem.Click += new System.EventHandler(this.viewMeChatsToolStripMenuItem_Click);
+            // 
+            // but_CopyName
+            // 
+            this.but_CopyName.Name = "but_CopyName";
+            this.but_CopyName.Size = new System.Drawing.Size(152, 22);
+            this.but_CopyName.Text = "Copy Name";
+            this.but_CopyName.Click += new System.EventHandler(this.but_CopyName_Click);
             // 
             // UserNameFinder
             // 
@@ -336,6 +349,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem tools_ButCaseSensitive;
         private System.Windows.Forms.ToolStripMenuItem viewMeChatsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem but_CopyName;
     }
 }
 

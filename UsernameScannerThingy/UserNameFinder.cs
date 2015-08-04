@@ -27,7 +27,7 @@ namespace UsernameScannerThingy
         {
             InitializeComponent();
 
-            this.Text = "Username Parser v0.39";
+            this.Text = "Username Parser v0.42";
             OpenFileDialog.Filter = extensionName + " files (*" + extension + ")|*" + extension;
             saveFileDialog_Export.Filter = extensionName + " files (*" + extension + ")|*" + extension;
 
@@ -281,6 +281,12 @@ namespace UsernameScannerThingy
             lookUpForm = new UserLookUp(meChats.UserChatMessages, meChats.ToString(), textBox_UserFilter.Text, tools_ButCaseSensitive.Checked); //Creates the lookUpForm.
             lookUpForm.StartPosition = FormStartPosition.CenterParent; //Centers the lookUpForm to the parent.
             lookUpForm.ShowDialog(this); //Shows the form.
+        }
+
+        private void but_CopyName_Click(object sender, EventArgs e)
+        {
+            User u = (User)listBox_Users.SelectedItem;
+            Clipboard.SetText(u.ToString());
         }
 
 
