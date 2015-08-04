@@ -27,7 +27,7 @@ namespace UsernameScannerThingy
         {
             InitializeComponent();
 
-            this.Text = "Username Parser v0.38";
+            this.Text = "Username Parser v0.39";
             OpenFileDialog.Filter = extensionName + " files (*" + extension + ")|*" + extension;
             saveFileDialog_Export.Filter = extensionName + " files (*" + extension + ")|*" + extension;
 

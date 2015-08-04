@@ -74,12 +74,13 @@ namespace UsernameScannerThingy
                 if (containsExact)
                 {
                     int strIndex = sLow.IndexOf(str);
+                    string acceptableChars = " .?:;!()[]{},^-+=_#@$"; //List of chars which can be at the beginning and end of the desired filter and not be considered part of it.
 
-                    if (strIndex == 0 || sLow[strIndex - 1] == ' ')
+                    if (strIndex == 0 || acceptableChars.Contains(sLow[strIndex - 1]))
                     {
                         if (strIndex + str.Length - 1 == sLow.Length - 1)
                             return true;
-                        else if (sLow[strIndex + str.Length] == ' ')
+                        else if (acceptableChars.Contains(sLow[strIndex + str.Length]))
                             return true;
                     }
                 }
