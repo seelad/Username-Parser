@@ -62,6 +62,11 @@ namespace UsernameScannerThingy
             return false;
         }
 
+        public void RemoveMessage(int index)
+        {
+            msgs.RemoveAt(index);
+        }
+
         public void AddMessage(string message)
         {
             msgs.Add(message);

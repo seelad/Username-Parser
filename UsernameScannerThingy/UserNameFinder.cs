@@ -21,12 +21,13 @@ namespace UsernameScannerThingy
         private const string extension = ".txt";
 
         private List<User> users = new List<User>();
+        private User meChats;
 
         public UserNameFinder()
         {
             InitializeComponent();
 
-            this.Text = "Username Parser v0.32";
+            this.Text = "Username Parser v0.35";
             OpenFileDialog.Filter = extensionName + " files (*" + extension + ")|*" + extension;
             saveFileDialog_Export.Filter = extensionName + " files (*" + extension + ")|*" + extension;
 
@@ -94,6 +95,7 @@ namespace UsernameScannerThingy
         {
             listBox_Users.Items.Clear(); //Removes what was previous in the list box.
             users.Clear(); //Removes the entries in the user list.
+            meChats = new User("Unknown /me Chat Posts", 0); // Recreates meChats which also removes any previous chat messages.
             foreach (string line in lines)
             {
                 int indexStart = line.IndexOf(']');
@@ -109,7 +111,7 @@ namespace UsernameScannerThingy
                 User newUser = new User(username, indexEnd);
                 newUser.AddMessage(line);
                 bool passed = true; //I dislike this.
-                if (newUser.ToString() != "")
+                if (newUser.ToString() != "") // /me posts end up having no defined username and thus are "".
                 {
                     foreach (User u in users)
                     {
@@ -123,6 +125,23 @@ namespace UsernameScannerThingy
                     if (passed)
                     {
                         users.Add(newUser); //Adds it to the users list.
+                    }
+                }
+                else
+                {
+                    meChats.AddMessage(line); //Add the /me post to the meChats user.
+                }
+            }
+
+            List<string> tempMeChatList = meChats.UserChatMessages;
+            for (int j = 0; j < users.Count; j++)
+            {
+                for (int i = tempMeChatList.Count - 1; i >= 0; i--) //Now it loops back through all the meChats and assigns the /me post to a known user.
+                {
+                    if (tempMeChatList[i].IndexOf(users[j].ToString()) == 8)
+                    {
+                        users[j].AddMessage(tempMeChatList[i]);
+                        meChats.RemoveMessage(i);
                     }
                 }
             }
@@ -139,7 +158,7 @@ namespace UsernameScannerThingy
             {
                 foreach (User u in users)
                 {
-                    if (u.MessagesContains(textBox_UserFilter.Text, true))
+                    if (u.MessagesContains(textBox_UserFilter.Text, !tools_ButCaseSensitive.Checked))
                         listBox_Users.Items.Add(u);
                 }
             }
@@ -247,6 +266,20 @@ namespace UsernameScannerThingy
                 listBox_Users.Items.Clear(); // Clears the items...
                 PopulateListBox(); //Re-populates the box. Note: This may cause problems b/c that's pretty intensive task.
             }
+        }
+
+        private void tools_ButCaseSensitive_Click(object sender, EventArgs e)
+        {
+            tools_ButCaseSensitive.Checked = !tools_ButCaseSensitive.Checked;
+            listBox_Users.Items.Clear(); // Clears the items...
+            PopulateListBox(); //Re-populates the box. Note: This may cause problems b/c that's pretty intensive task.
+        }
+
+        private void viewMeChatsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lookUpForm = new UserLookUp(meChats.UserChatMessages, meChats.ToString()); //Creates the lookUpForm.
+            lookUpForm.StartPosition = FormStartPosition.CenterParent; //Centers the lookUpForm to the parent.
+            lookUpForm.ShowDialog(this); //Shows the form.
         }
 
 

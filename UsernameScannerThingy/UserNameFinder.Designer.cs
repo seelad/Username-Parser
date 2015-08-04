@@ -53,6 +53,9 @@
             this.filterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tools_ButRealTimeUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.tools_ButManualUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tools_ButCaseSensitive = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewMeChatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip_01.SuspendLayout();
             this.contextMenu_UserList.SuspendLayout();
             this.SuspendLayout();
@@ -222,7 +225,8 @@
             // 
             this.toolBut_Tools.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolBut_Tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.filterToolStripMenuItem});
+            this.filterToolStripMenuItem,
+            this.viewMeChatsToolStripMenuItem});
             this.toolBut_Tools.Image = ((System.Drawing.Image)(resources.GetObject("toolBut_Tools.Image")));
             this.toolBut_Tools.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolBut_Tools.Name = "toolBut_Tools";
@@ -234,9 +238,11 @@
             // 
             this.filterToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tools_ButRealTimeUpdate,
-            this.tools_ButManualUpdate});
+            this.tools_ButManualUpdate,
+            this.toolStripSeparator1,
+            this.tools_ButCaseSensitive});
             this.filterToolStripMenuItem.Name = "filterToolStripMenuItem";
-            this.filterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.filterToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.filterToolStripMenuItem.Text = "Filter:";
             // 
             // tools_ButRealTimeUpdate
@@ -257,6 +263,25 @@
             this.tools_ButManualUpdate.Text = "Manual Update";
             this.tools_ButManualUpdate.ToolTipText = "Forces the \"Get Users!\" button to be pressed in order to filter the user list.";
             this.tools_ButManualUpdate.Click += new System.EventHandler(this.tools_ButManualUpdate_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(158, 6);
+            // 
+            // tools_ButCaseSensitive
+            // 
+            this.tools_ButCaseSensitive.Name = "tools_ButCaseSensitive";
+            this.tools_ButCaseSensitive.Size = new System.Drawing.Size(161, 22);
+            this.tools_ButCaseSensitive.Text = "Case Sensitive";
+            this.tools_ButCaseSensitive.Click += new System.EventHandler(this.tools_ButCaseSensitive_Click);
+            // 
+            // viewMeChatsToolStripMenuItem
+            // 
+            this.viewMeChatsToolStripMenuItem.Name = "viewMeChatsToolStripMenuItem";
+            this.viewMeChatsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.viewMeChatsToolStripMenuItem.Text = "View /me Chats";
+            this.viewMeChatsToolStripMenuItem.Click += new System.EventHandler(this.viewMeChatsToolStripMenuItem_Click);
             // 
             // UserNameFinder
             // 
@@ -308,6 +333,9 @@
         private System.Windows.Forms.ToolStripMenuItem filterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tools_ButRealTimeUpdate;
         private System.Windows.Forms.ToolStripMenuItem tools_ButManualUpdate;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem tools_ButCaseSensitive;
+        private System.Windows.Forms.ToolStripMenuItem viewMeChatsToolStripMenuItem;
     }
 }
 
