@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.textBox_Msg = new System.Windows.Forms.TextBox();
             this.Label_Name = new System.Windows.Forms.Label();
+            this.textBox_MsgFilter = new System.Windows.Forms.TextBox();
+            this.toolTip_FilterChats = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // textBox_Msg
@@ -54,11 +57,23 @@
             this.Label_Name.Text = "Name";
             this.Label_Name.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // textBox_MsgFilter
+            // 
+            this.textBox_MsgFilter.Location = new System.Drawing.Point(11, 223);
+            this.textBox_MsgFilter.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox_MsgFilter.Multiline = true;
+            this.textBox_MsgFilter.Name = "textBox_MsgFilter";
+            this.textBox_MsgFilter.ReadOnly = true;
+            this.textBox_MsgFilter.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox_MsgFilter.Size = new System.Drawing.Size(390, 65);
+            this.textBox_MsgFilter.TabIndex = 14;
+            // 
             // UserLookUp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(412, 230);
+            this.ClientSize = new System.Drawing.Size(412, 299);
+            this.Controls.Add(this.textBox_MsgFilter);
             this.Controls.Add(this.Label_Name);
             this.Controls.Add(this.textBox_Msg);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -75,5 +90,7 @@
 
         private System.Windows.Forms.TextBox textBox_Msg;
         private System.Windows.Forms.Label Label_Name;
+        private System.Windows.Forms.TextBox textBox_MsgFilter;
+        private System.Windows.Forms.ToolTip toolTip_FilterChats;
     }
 }

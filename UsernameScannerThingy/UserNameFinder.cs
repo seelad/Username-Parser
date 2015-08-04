@@ -27,7 +27,7 @@ namespace UsernameScannerThingy
         {
             InitializeComponent();
 
-            this.Text = "Username Parser v0.35";
+            this.Text = "Username Parser v0.37";
             OpenFileDialog.Filter = extensionName + " files (*" + extension + ")|*" + extension;
             saveFileDialog_Export.Filter = extensionName + " files (*" + extension + ")|*" + extension;
 
@@ -182,7 +182,7 @@ namespace UsernameScannerThingy
         private void but_Info_Click(object sender, EventArgs e)
         {
             User u = (User)listBox_Users.SelectedItem;
-            lookUpForm = new UserLookUp(u.UserChatMessages, u.ToString()); //Creates the lookUpForm.
+            lookUpForm = new UserLookUp(u.UserChatMessages, u.ToString() , textBox_UserFilter.Text, tools_ButCaseSensitive.Checked); //Creates the lookUpForm.
             lookUpForm.StartPosition = FormStartPosition.CenterParent; //Centers the lookUpForm to the parent.
             lookUpForm.ShowDialog(this); //Shows the form.
         }
@@ -192,7 +192,7 @@ namespace UsernameScannerThingy
             if (listBox_Users.SelectedIndex != -1)
             {
                 User u = (User)listBox_Users.SelectedItem;
-                lookUpForm = new UserLookUp(u.UserChatMessages, u.ToString()); //Creates the lookUpForm.
+                lookUpForm = new UserLookUp(u.UserChatMessages, u.ToString(), textBox_UserFilter.Text, tools_ButCaseSensitive.Checked); //Creates the lookUpForm.
                 lookUpForm.StartPosition = FormStartPosition.CenterParent; //Centers the lookUpForm to the parent.
                 lookUpForm.ShowDialog(this); //Shows the form.
             }
@@ -277,7 +277,7 @@ namespace UsernameScannerThingy
 
         private void viewMeChatsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            lookUpForm = new UserLookUp(meChats.UserChatMessages, meChats.ToString()); //Creates the lookUpForm.
+            lookUpForm = new UserLookUp(meChats.UserChatMessages, meChats.ToString(), textBox_UserFilter.Text, tools_ButCaseSensitive.Checked); //Creates the lookUpForm.
             lookUpForm.StartPosition = FormStartPosition.CenterParent; //Centers the lookUpForm to the parent.
             lookUpForm.ShowDialog(this); //Shows the form.
         }
