@@ -27,10 +27,11 @@ namespace UsernameScannerThingy
         {
             InitializeComponent();
 
-            this.Text = "Username Parser v0.37";
+            this.Text = "Username Parser v0.38";
             OpenFileDialog.Filter = extensionName + " files (*" + extension + ")|*" + extension;
             saveFileDialog_Export.Filter = extensionName + " files (*" + extension + ")|*" + extension;
 
+            meChats = new User("Unknown /me Chat Posts", 0);
         }
 
         private string CheckDialog()
