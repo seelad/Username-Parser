@@ -20,12 +20,13 @@ namespace UsernameScannerThingy
         private const string extensionName = "Text";
         private const string extension = ".txt";
 
+        private List<User> users = new List<User>();
 
         public UserNameFinder()
         {
             InitializeComponent();
 
-            this.Text = "Username Parser v0.27";
+            this.Text = "Username Parser v0.32";
             OpenFileDialog.Filter = extensionName + " files (*" + extension + ")|*" + extension;
             saveFileDialog_Export.Filter = extensionName + " files (*" + extension + ")|*" + extension;
 
@@ -63,34 +64,36 @@ namespace UsernameScannerThingy
                 if (tempResult != null)
                 {
                     List<string> lineList = new List<string>();
-
-                    using (StreamReader stream = new StreamReader(OpenFileDialog.FileName))
+                    for (int i = OpenFileDialog.FileNames.Length - 1; i >= 0; i--)
                     {
-                        while (stream.EndOfStream == false) //Checks to make sure the streamreader is not at the end.
+                        using (StreamReader stream = new StreamReader(OpenFileDialog.FileNames[i]))
                         {
-                            string line = stream.ReadLine();
-                            lineList.Add(line);
+                            while (stream.EndOfStream == false) //Checks to make sure the streamreader is not at the end.
+                            {
+                                string line = stream.ReadLine();
+                                lineList.Add(line);
+                            }
+
                         }
-                        
                     }
 
-                    PopulateListBox(lineList.ToArray());
-                     
+                    textBox_Raw.Lines = lineList.ToArray();
+                    ParseUsers(textBox_Raw.Lines);
+                    PopulateListBox(); //Populates the user list.
                 }
                
         }
 
         private void button_GetUsers_Click(object sender, EventArgs e)
         {
-            PopulateListBox(textBox_Raw.Lines);
+            ParseUsers(textBox_Raw.Lines);
+            PopulateListBox();
         }
 
-        private void PopulateListBox(string[] lines)
+        public void ParseUsers(string[] lines)
         {
             listBox_Users.Items.Clear(); //Removes what was previous in the list box.
-
-            List<User> tempUsers = new List<User>();
-
+            users.Clear(); //Removes the entries in the user list.
             foreach (string line in lines)
             {
                 int indexStart = line.IndexOf(']');
@@ -103,12 +106,12 @@ namespace UsernameScannerThingy
                 {
                     username = line.Substring(indexStart, (indexEnd - indexStart));
                 }
-                User newUser = new User(username);
+                User newUser = new User(username, indexEnd);
                 newUser.AddMessage(line);
                 bool passed = true; //I dislike this.
                 if (newUser.ToString() != "")
                 {
-                    foreach (User u in tempUsers)
+                    foreach (User u in users)
                     {
                         if (u.ToString() == newUser.ToString())
                         {
@@ -119,12 +122,27 @@ namespace UsernameScannerThingy
                     }
                     if (passed)
                     {
-                        tempUsers.Add(newUser); //Add it to tempusers so I don't have to parse the listBox one from type object.
-                        listBox_Users.Items.Add(newUser);
+                        users.Add(newUser); //Adds it to the users list.
                     }
                 }
             }
+        }
 
+        private void PopulateListBox()
+        {
+            if (textBox_UserFilter.Text == "")
+            {
+                foreach (User u in users)
+                    listBox_Users.Items.Add(u);
+            }
+            else
+            {
+                foreach (User u in users)
+                {
+                    if (u.MessagesContains(textBox_UserFilter.Text, true))
+                        listBox_Users.Items.Add(u);
+                }
+            }
             label_Users.Text = "Users (" + listBox_Users.Items.Count + ")";
 
         }
@@ -172,6 +190,7 @@ namespace UsernameScannerThingy
 
         private void but_ExportUserList_Click(object sender, EventArgs e)
         {
+            saveFileDialog_Export.FileName = "User_List.txt";
             string tempResult = CheckDialog_Save();
             if (tempResult != null)
             {
@@ -188,6 +207,7 @@ namespace UsernameScannerThingy
 
         private void but_ExportRawText_Click(object sender, EventArgs e)
         {
+            saveFileDialog_Export.FileName = "Raw_Text.txt";
             string tempResult = CheckDialog_Save();
             if (tempResult != null)
             {
@@ -199,6 +219,33 @@ namespace UsernameScannerThingy
                     }
                 }
 
+            }
+        }
+
+        private void tools_ButManualUpdate_Click(object sender, EventArgs e)
+        {
+            if (!tools_ButManualUpdate.Checked)
+            {
+                tools_ButRealTimeUpdate.Checked = tools_ButManualUpdate.Checked;
+                tools_ButManualUpdate.Checked = !tools_ButManualUpdate.Checked;
+            }
+        }
+
+        private void tools_ButRealTimeUpdate_Click(object sender, EventArgs e)
+        {
+            if (!tools_ButRealTimeUpdate.Checked)
+            {
+                tools_ButRealTimeUpdate.Checked = tools_ButManualUpdate.Checked;
+                tools_ButManualUpdate.Checked = !tools_ButManualUpdate.Checked;
+            }
+        }
+
+        private void textBox_UserFilter_TextChanged(object sender, EventArgs e)
+        {
+            if (tools_ButRealTimeUpdate.Checked)
+            {
+                listBox_Users.Items.Clear(); // Clears the items...
+                PopulateListBox(); //Re-populates the box. Note: This may cause problems b/c that's pretty intensive task.
             }
         }
 
